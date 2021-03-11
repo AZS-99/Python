@@ -32,18 +32,18 @@ class Fraction:
         return Fraction(self.numerator * other.denominator, self.denominator * other.numerator)
 
     def __iadd__(self, other):
-        new_denominator = math.lcm(self.denominator, other.denominator)
-        new_numerator = new_denominator // self.denominator * self.numerator + new_denominator // other.denominator * other.numerator
-        return Fraction(new_numerator, new_denominator)
+        return self + other
 
     def __isub__(self, other):
-        new_denominator = math.lcm(self.denominator, other.denominator)
-        new_numerator = new_denominator // self.denominator * self.numerator - new_denominator // other.denominator * other.numerator
-        return Fraction(new_numerator, new_denominator)
+        return self - other
 
     def __lt__(self, other):
-        pass
+        tmp = self - other
+        return True if tmp.numerator < 0 else False
 
+    def __gt__(self, other):
+        tmp = self - other
+        return True if tmp.numerator > 0 else False
 
 
 if __name__ == '__main__':
@@ -51,5 +51,5 @@ if __name__ == '__main__':
     f2 = Fraction(-1, 6)
     print(f1)
     print(f2)
-    f1 += f2
-    print(f1 != f2)
+
+    print(f1 < f2)
