@@ -134,7 +134,7 @@ class Node:
             else:
                 current = current.next
 
-    def reverse(self):
+    def __reversed__(self):
         """
         Reverse the order of values in the list.
         :return: None
@@ -144,7 +144,7 @@ class Node:
         penultimate = self.penultimate()
         node = penultimate.next
         penultimate.next = None
-        self.reverse()
+        reversed(self)
         node.next = self.next
         self.next = node
         self.value, node.value = node.value, self.value
