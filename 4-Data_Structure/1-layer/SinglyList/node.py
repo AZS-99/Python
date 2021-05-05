@@ -51,6 +51,21 @@ class Node:
     def __len__(self):
         return 1 if not self.next else len(self.next) + 1
 
+    def __reversed__(self):
+        """
+        Reverse the order of values in the list.
+        :return: None
+        """
+        if not self.next:
+            return
+        penultimate = self.penultimate()
+        node = penultimate.next
+        penultimate.next = None
+        reversed(self)
+        node.next = self.next
+        self.next = node
+        self.value, node.value = node.value, self.value
+
     def __setitem__(self, index, value):
         """
         Insert a node holding the passed value at the specified index
@@ -133,21 +148,6 @@ class Node:
                 current.next = current.next.next
             else:
                 current = current.next
-
-    def __reversed__(self):
-        """
-        Reverse the order of values in the list.
-        :return: None
-        """
-        if not self.next:
-            return
-        penultimate = self.penultimate()
-        node = penultimate.next
-        penultimate.next = None
-        reversed(self)
-        node.next = self.next
-        self.next = node
-        self.value, node.value = node.value, self.value
 
     def swap_after(self, value):
         """
