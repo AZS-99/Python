@@ -95,6 +95,11 @@ class List:
         self.tail = other.tail
 
     def pop(self, index=-1):
+        if index == -1:
+            current = self.head
+            while current.next.next:
+                current = current.next
+            current.next = None
         if index == 0:
             tmp = self.head
             self.head = self.head.next
