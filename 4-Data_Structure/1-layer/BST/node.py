@@ -18,7 +18,7 @@ class Node:
         return (len(self.left) if self.left else 0) + (len(self.right) if self.right else 0) + 1
 
     # Note that Python pointers are all of type (void*), so once self.left/self.right is None, its pointer doesn't hold
-    # the type Node, and the interpreter wouldn't know what "height" to look into, so we need the ternary
+    # the type "Node", and the interpreter wouldn't know what "height" to look into, so we need the ternary
     def height(self):
         if not (self.right or self.left):
             return 1
