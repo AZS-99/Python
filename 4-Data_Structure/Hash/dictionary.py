@@ -1,7 +1,7 @@
 class Dictionary:
-    def __init__(self, max_collision_ratio=0.7, initial_capacity=10):
+    def __init__(self, max_collision=3, initial_capacity=2):
         self.capacity = initial_capacity
-        self.max_collision_ration = max_collision_ratio
+        self.MAX_COLLISION = max_collision
         self.collisions = 0
         self.table = [[] for i in range(self.capacity)]
 
@@ -14,7 +14,13 @@ class Dictionary:
         raise KeyError
 
     def enlarge(self):
-        pass
+        self.capacity *= 2
+        self.collisions = 0
+        tmp_table = self.table
+        self.table = [[] for i in range(self.capacity)]
+        for bucket in tmp_table:
+            for key, value in bucket:
+                self.insert(key, value)
 
     def insert(self, key, value):
         """
@@ -24,15 +30,18 @@ class Dictionary:
         :return: None
         """
         index = hash(key) % self.capacity
+        print('index = ', index)
         bucket = self.table[index]
-        if len(bucket) == 0:
-            bucket.append((key, value))
+        if len(self.table[index]) == 0:
+            self.table[index].append((key, value))
         else:
-            self.collisions += 1
             # If they key already exists, replace the value with the new one
             for i in range(len(bucket)):
                 if bucket[i][0] == key:
                     bucket[i] = (key, value)
-                    break
-
+                    return
+            bucket.append((key, value))
+            self.collisions = max(self.collisions, len(bucket))
+        if self.collisions > self.MAX_COLLISION:
+            self.enlarge()
 
